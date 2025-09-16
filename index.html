@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Buscar película</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <h1>Buscar Director y Año de Película</h1>
@@ -11,33 +12,6 @@
 
   <p id="resultado"></p>
 
-  <script>
-    const apiKey = 'TU_API_KEY_AQUI';  // Pon aquí tu API key de OMDb
-
-    document.getElementById('buscar').addEventListener('click', () => {
-      const titulo = document.getElementById('titulo').value.trim();
-      const resultado = document.getElementById('resultado');
-
-      if (!titulo) {
-        resultado.textContent = 'Por favor, introduce un título.';
-        return;
-      }
-
-      resultado.textContent = 'Buscando...';
-
-      fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(titulo)}&apikey=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.Response === "True") {
-            resultado.textContent = `Director: ${data.Director} | Año: ${data.Year}`;
-          } else {
-            resultado.textContent = 'Película no encontrada.';
-          }
-        })
-        .catch(() => {
-          resultado.textContent = 'Error al conectar con la API.';
-        });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
