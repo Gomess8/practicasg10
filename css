@@ -1,4 +1,4 @@
-const apiKey = 'TU_API_KEY_AQUI';
+const apiKey = '2d251d67';
 
 document.getElementById('buscar').addEventListener('click', () => {
   const titulo = document.getElementById('titulo').value.trim();
