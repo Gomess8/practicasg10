@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Mi Página Web</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Buscar película</title>
 </head>
 <body>
-    <h1>Bienvenido a mi página</h1>
-    <p>Este es un párrafo de ejemplo. Puedes escribir lo que quieras aquí.</p>
+  <h1>Buscar Director y Año de Película</h1>
+  <input type="text" id="titulo" placeholder="Introduce el título de la película" />
+  <button id="buscar">Buscar</button>
 
-    <div class="formulario">
-        <input type="text" placeholder="Escribe algo...">
-        <button>Enviar</button>
-    </div>
+  <p id="resultado"></p>
+
+  <script>
+    const apiKey = 'TU_API_KEY_AQUI';  // Pon aquí tu API key de OMDb
+
+    document.getElementById('buscar').addEventListener('click', () => {
+      const titulo = document.getElementById('titulo').value.trim();
+      const resultado = document.getElementById('resultado');
+
+      if (!titulo) {
+        resultado.textContent = 'Por favor, introduce un título.';
+        return;
+      }
+
+      resultado.textContent = 'Buscando...';
+
+      fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(titulo)}&apikey=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.Response === "True") {
+            resultado.textContent = `Director: ${data.Director} | Año: ${data.Year}`;
+          } else {
+            resultado.textContent = 'Película no encontrada.';
+          }
+        })
+        .catch(() => {
+          resultado.textContent = 'Error al conectar con la API.';
+        });
+    });
+  </script>
 </body>
 </html>
-
