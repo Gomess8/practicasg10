@@ -1,21 +1,26 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 2em;
-  background-color: #f5f5f5;
-  color: #333;
-}
+const apiKey = 'TU_API_KEY_AQUI';
 
-input, button {
-  padding: 0.5em;
-  font-size: 1em;
-}
+document.getElementById('buscar').addEventListener('click', () => {
+  const titulo = document.getElementById('titulo').value.trim();
+  const resultado = document.getElementById('resultado');
 
-button {
-  margin-left: 0.5em;
-  cursor: pointer;
-}
+  if (!titulo) {
+    resultado.textContent = 'Por favor, introduce un título.';
+    return;
+  }
 
-#resultado {
-  margin-top: 1em;
-  font-weight: bold;
-}
+  resultado.textContent = 'Buscando...';
+
+  fetch(`https://www.omdbapi.com/?t=${encodeURIComponent(titulo)}&apikey=${apiKey}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.Response === "True") {
+        resultado.textContent = `Director: ${data.Director} | Año: ${data.Year}`;
+      } else {
+        resultado.textContent = 'Película no encontrada.';
+      }
+    })
+    .catch(() => {
+      resultado.textContent = 'Error al conectar con la API.';
+    });
+});
